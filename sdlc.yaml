@@ -1,0 +1,44 @@
+version: v1
+name: ripgrep-local-20261018-1254
+traceability:
+  mode: warn
+release_naming:
+  format: semver-plain
+  mapping: R2
+stages:
+  planning:
+    require_milestone: true
+    require_issues_assigned: true
+  development:
+    branch: master
+    deploy_target: dev
+    required_checks:
+      - wasm
+      - rustfmt
+      - docs
+      - Compile Fuzz Test Targets
+    required_reviewers:
+      min_approvals: 1
+  testing:
+    branch_pattern: master
+    required_checks:
+      - wasm
+      - rustfmt
+      - docs
+      - Compile Fuzz Test Targets
+    required_reviewers:
+      min_approvals: 1
+  evidencing:
+    required_reviewers:
+      min_approvals: 1
+  deployment:
+    target: production
+    deploy_workflow: .github/workflows/release.yml
+    deploy_on_tag: true
+    required_checks:
+      - wasm
+      - rustfmt
+      - docs
+      - Compile Fuzz Test Targets
+    promotion: manual
+    requires_evidence_approval: true
